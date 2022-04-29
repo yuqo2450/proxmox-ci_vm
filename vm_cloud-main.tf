@@ -97,7 +97,7 @@ resource "proxmox_vm_qemu" "vm" {
       model         = "e1000"
       bridge        = network.value.net_bridge
       tag           = network.value.net_vlan
-      macaddr       = macaddress.vm_macaddress[network].address
+      macaddr       = macaddress.vm_macaddress[network.key].address
     }
   }
 

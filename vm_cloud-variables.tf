@@ -83,10 +83,8 @@ variable "cloudinit_vars" {
   type = object({
     hostname = string
     domain = string
-    ip4_addresses = list(string)
+    ip4_address = string
     ip4_gateway = string
-    ip6_addresses = list(string)
-    ip6_gateway = string
     dnsservers = list(string)
     searchdomains = list(string)
   })

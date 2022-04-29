@@ -25,7 +25,7 @@ locals {
 
 ### Add resources in this section.
 resource "macaddress" "vm_macaddress" {
-  count = var.vm_networks[*]
+  count = var.vm_networks
 }
 
 resource "proxmox_virtual_environment_file" "vm_userdata" {

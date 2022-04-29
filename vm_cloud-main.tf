@@ -21,7 +21,7 @@ locals {
   macaddress = upper(macaddress.vm_macaddress.address)
   civars = merge(var.cloudinit_vars, {"mac_address" = local.macaddress})
   userdata = proxmox_virtual_environment_file.vm_userdata.id
-  netdata = proxmox_virtual_environment_file.netdata.id
+  netdata = proxmox_virtual_environment_file.vm_netdata.id
 }
 
 ### Add resources in this section.

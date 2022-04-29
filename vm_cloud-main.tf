@@ -18,14 +18,15 @@ terraform {
 
 ### Add values u want to reuse in this file. Or shorten expressions.
 locals {
-  macaddress = macaddress.vm_macaddress.address
-  civars = merge(var.cloudinit_vars, {"mac_address" = local.macaddress})
+  civars = merge(var.cloudinit_vars, {"mac_address" = macaddress.vm_macaddress[0].address})
   userdata = proxmox_virtual_environment_file.vm_userdata.id
   netdata = proxmox_virtual_environment_file.vm_netdata.id
 }
 
 ### Add resources in this section.
-resource "macaddress" "vm_macaddress" { }
+resource "macaddress" "vm_macaddress" {
+  count = var.vm_networks[*]
+}
 
 resource "proxmox_virtual_environment_file" "vm_userdata" {
   
@@ -96,7 +97,7 @@ resource "proxmox_vm_qemu" "vm" {
       model         = "e1000"
       bridge        = network.value.net_bridge
       tag           = network.value.net_vlan
-      macaddr       = local.macaddress
+      macaddr       = macaddress.vm_macaddress[each.key].address
     }
   }
 

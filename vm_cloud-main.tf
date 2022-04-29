@@ -18,6 +18,7 @@ terraform {
 
 ### Add values u want to reuse in this file. Or shorten expressions.
 locals {
+  networks = [for k, v in var.networks : merge(v, {"mac_address" = macaddress.vm_macaddress[k].address)}]
   civars = merge(var.cloudinit_vars, {"mac_address" = macaddress.vm_macaddress[0].address})
   userdata = proxmox_virtual_environment_file.vm_userdata.id
   netdata = proxmox_virtual_environment_file.vm_netdata.id

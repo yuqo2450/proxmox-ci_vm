@@ -18,7 +18,7 @@ terraform {
 
 ### Add values u want to reuse in this file. Or shorten expressions.
 locals {
-  macaddress = upper(macaddress.vm_macaddress.address)
+  macaddress = macaddress.vm_macaddress.address
   civars = merge(var.cloudinit_vars, {"mac_address" = local.macaddress})
   userdata = proxmox_virtual_environment_file.vm_userdata.id
   netdata = proxmox_virtual_environment_file.vm_netdata.id

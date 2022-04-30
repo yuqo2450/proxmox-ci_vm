@@ -92,7 +92,7 @@ resource "proxmox_vm_qemu" "vm" {
   bootdisk          = "scsi0"
 
   dynamic "network" {
-    for_each        = local.networks[*]
+    for_each        = local.networks
     content {
       model         = "e1000"
       bridge        = network.value.net_bridge

@@ -51,7 +51,7 @@ resource "proxmox_virtual_environment_file" "vm_netdata" {
   node_name     = var.node_name
 
   source_raw {
-    data      = templatefile(var.netdata_template, tomap(local.networks))
+    data      = templatefile(var.netdata_template, toset(local.networks))
     file_name = "${var.vm_name}-net.yaml"
   }
 }

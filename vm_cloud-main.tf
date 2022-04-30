@@ -19,7 +19,6 @@ terraform {
 ### Add values u want to reuse in this file. Or shorten expressions.
 locals {
   networks = [for k, v in var.vm_networks : merge(v, {"mac_address" = macaddress.vm_macaddress[k].address})]
-  civars = merge(var.cloudinit_vars, {"mac_address" = macaddress.vm_macaddress[0].address})
   userdata = proxmox_virtual_environment_file.vm_userdata.id
   netdata = proxmox_virtual_environment_file.vm_netdata.id
 }
@@ -38,7 +37,7 @@ resource "proxmox_virtual_environment_file" "vm_userdata" {
   node_name     = var.node_name
 
   source_raw {
-    data      = templatefile(var.userdata_template, local.civars)
+    data      = templatefile(var.userdata_template, var.userdata_vars)
     file_name = "${var.vm_name}-user.yaml"
   }
 }
@@ -52,7 +51,7 @@ resource "proxmox_virtual_environment_file" "vm_netdata" {
   node_name     = var.node_name
 
   source_raw {
-    data      = templatefile(var.netdata_template, local.civars)
+    data      = templatefile(var.netdata_template, {"networks" = local.networks})
     file_name = "${var.vm_name}-net.yaml"
   }
 }
@@ -93,12 +92,12 @@ resource "proxmox_vm_qemu" "vm" {
   bootdisk          = "scsi0"
 
   dynamic "network" {
-    for_each        = var.vm_networks[*]
+    for_each        = local.networks[*]
     content {
       model         = "e1000"
       bridge        = network.value.net_bridge
       tag           = network.value.net_vlan
-      macaddr       = macaddress.vm_macaddress[network.key].address
+      macaddr       = network.value.mac_address
     }
   }
 

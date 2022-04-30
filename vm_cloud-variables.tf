@@ -53,12 +53,20 @@ variable "vm_networks" {
     {
       net_bridge = string
       net_vlan = number
+      ip4_address = string
+      ip4_gateway = string
+      dnsservers = list(string)
+      searchdomains = list(string)
     } 
   ))
   default = [
     {
       net_bridge = "vmbr0"
       net_vlan = -1
+      ip4_address = null
+      ip4_gateway = null
+      dnsservers = null
+      searchdomains = null
     }
   ]
 }
@@ -79,15 +87,13 @@ variable "netdata_template" {
   description = "Path to cloud init network-data template file on local filesystem."
 }
 
-variable "cloudinit_vars" {
+variable "userdata_vars" {
   type = object({
     hostname = string
     domain = string
-    ip4_address = string
-    ip4_gateway = string
     dnsservers = list(string)
     searchdomains = list(string)
   })
   default = null
-  description = "Host specific network data values (macaddress)."
+  description = "Host specific userdata data values (hostname)."
 }

@@ -94,7 +94,7 @@ resource "proxmox_vm_qemu" "vm_base" {
 
   dynamic "network" {
     for_each        = local.interfaces
-    iterator        = "interface"
+    iterator        = interface
     content {
       model         = "e1000"
       bridge        = interface.value.net_bridge

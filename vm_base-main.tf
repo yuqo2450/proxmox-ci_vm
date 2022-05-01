@@ -48,7 +48,7 @@ resource "proxmox_virtual_environment_file" "vm_base_netdata" {
   node_name     = var.node_name
   source_raw {
     data      = templatefile(var.netdata_template, {
-        "interfaces" = local.interfaces,
+        "interfaces" = local.interfaces
         "nameservers" = var.nameserver_vars
       }
     )

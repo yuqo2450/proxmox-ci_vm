@@ -24,11 +24,11 @@ locals {
 }
 
 ### Add resources in this section.
-resource "macaddress" "vm_macaddress" {
+resource "macaddress" "vm_base_macaddress" {
   count = length(var.vm_networks)
 }
 
-resource "proxmox_virtual_environment_file" "vm_userdata" {
+resource "proxmox_virtual_environment_file" "vm_base_userdata" {
   
   provider      = bpg-proxmox
 
@@ -42,7 +42,7 @@ resource "proxmox_virtual_environment_file" "vm_userdata" {
   }
 }
 
-resource "proxmox_virtual_environment_file" "vm_netdata" {
+resource "proxmox_virtual_environment_file" "vm_base_netdata" {
   
   provider      = bpg-proxmox
 
@@ -56,7 +56,7 @@ resource "proxmox_virtual_environment_file" "vm_netdata" {
   }
 }
 
-resource "proxmox_vm_qemu" "vm" {
+resource "proxmox_vm_qemu" "vm_base" {
 
   provider          = telmate-proxmox
 

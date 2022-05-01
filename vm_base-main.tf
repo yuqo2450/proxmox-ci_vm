@@ -30,8 +30,6 @@ resource "proxmox_virtual_environment_file" "vm_base_userdata" {
   
   provider      = bpg-proxmox
 
-  count = var.userdata_vars != null ? 1 : 0
-
   content_type  = "snippets"
   datastore_id  = "local"
   node_name     = var.node_name
@@ -44,8 +42,6 @@ resource "proxmox_virtual_environment_file" "vm_base_userdata" {
 resource "proxmox_virtual_environment_file" "vm_base_netdata" {
   
   provider      = bpg-proxmox
-
-  count = var.vm_interfaces != null || var.nameserver_vars != null ? 1 : 0
 
   content_type  = "snippets"
   datastore_id  = "local"

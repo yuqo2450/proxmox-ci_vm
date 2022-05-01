@@ -43,7 +43,6 @@ variable "vm_disks" {
 }
 variable "vm_interfaces" {
   type = map
-  default = null
   description = "Map for network interfaces. This is also used to configure cloud init."
 }
 variable "description" {
@@ -61,7 +60,6 @@ variable "netdata_template" {
 }
 variable "userdata_vars" {
   type = any
-  default = null
   description = "Host specific userdata data values (hostname)."
 }
 variable "nameserver_vars" {

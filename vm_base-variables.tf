@@ -48,7 +48,7 @@ variable "vm_disks" {
   ]
 }
 
-variable "vm_networks" {
+variable "vm_interfaces" {
   type = map
   default = {
     "eth0" = {

@@ -49,24 +49,11 @@ variable "vm_disks" {
 }
 
 variable "vm_networks" {
-  type = map(object(
-    {
-      net_bridge = string
-      net_vlan = number
-      ip4_address = string
-      ip4_gateway = string
-      dnsservers = list(string)
-      searchdomains = list(string)
-    } 
-  ))
+  type = map
   default = {
     "eth0" = {
       net_bridge = "vmbr0"
       net_vlan = -1
-      ip4_address = null
-      ip4_gateway = null
-      dnsservers = null
-      searchdomains = null
     }
   }
 }

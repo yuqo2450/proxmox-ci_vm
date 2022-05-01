@@ -19,8 +19,8 @@ terraform {
 ### Add values u want to reuse in this file. Or shorten expressions.
 locals {
   networks = {for k, v in var.vm_networks : k => merge(v, {"mac_address" = macaddress.vm_macaddress[regex("\\d",k)].address})}
-  userdata = proxmox_virtual_environment_file.vm_userdata.id
-  netdata = proxmox_virtual_environment_file.vm_netdata.id
+  userdata = proxmox_virtual_environment_file.vm_base_userdata.id
+  netdata = proxmox_virtual_environment_file.vm_base_netdata.id
 }
 
 ### Add resources in this section.

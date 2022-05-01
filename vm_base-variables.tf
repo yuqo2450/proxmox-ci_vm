@@ -43,12 +43,8 @@ variable "vm_disks" {
 }
 variable "vm_interfaces" {
   type = map
-  default = {
-    "eth0" = {
-      net_bridge = "vmbr0"
-      net_vlan = -1
-    }
-  }
+  default = null
+  description = "Map for network interfaces. This is also used to configure cloud init."
 }
 variable "description" {
   type = string
@@ -65,6 +61,11 @@ variable "netdata_template" {
 }
 variable "userdata_vars" {
   type = any
+  default = null
+  description = "Host specific userdata data values (hostname)."
+}
+variable "nameserver_vars" {
+  type = map
   default = null
   description = "Host specific userdata data values (hostname)."
 }

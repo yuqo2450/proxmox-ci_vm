@@ -30,6 +30,8 @@ resource "proxmox_virtual_environment_file" "vm_base_userdata" {
   
   provider      = bpg-proxmox
 
+  count = var.userdata_vars != null ? 1 : 0
+
   content_type  = "snippets"
   datastore_id  = "local"
   node_name     = var.node_name
@@ -43,12 +45,15 @@ resource "proxmox_virtual_environment_file" "vm_base_netdata" {
   
   provider      = bpg-proxmox
 
+  count = var.interfaces != null || var.nameserver_vars != null ? 1 : 0
+
   content_type  = "snippets"
   datastore_id  = "local"
   node_name     = var.node_name
   source_raw {
     data      = templatefile(var.netdata_template, {
-        "networks" = local.interfaces
+        "interfaces" = local.interfaces,
+        "nameservers" = var.nameserver_vars
       }
     )
     file_name = "${var.vm_name}-net.yaml"

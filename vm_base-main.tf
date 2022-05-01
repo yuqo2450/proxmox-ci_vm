@@ -23,7 +23,7 @@ locals {
 
 ### Add resources in this section.
 resource "macaddress" "vm_base_macaddress" {
-  count = length(local.networks)
+  count = length(local.interfaces)
 }
 
 resource "proxmox_virtual_environment_file" "vm_base_userdata" {

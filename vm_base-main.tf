@@ -45,7 +45,7 @@ resource "proxmox_virtual_environment_file" "vm_base_netdata" {
   
   provider      = bpg-proxmox
 
-  count = var.interfaces != null || var.nameserver_vars != null ? 1 : 0
+  count = var.vm_interfaces != null || var.nameserver_vars != null ? 1 : 0
 
   content_type  = "snippets"
   datastore_id  = "local"

@@ -75,12 +75,7 @@ variable "netdata_template" {
 }
 
 variable "userdata_vars" {
-  type = object({
-    hostname = string
-    domain = string
-    dnsservers = list(string)
-    searchdomains = list(string)
-  })
+  type = any
   default = null
   description = "Host specific userdata data values (hostname)."
 }

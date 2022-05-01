@@ -33,7 +33,6 @@ resource "proxmox_virtual_environment_file" "vm_base_userdata" {
   content_type  = "snippets"
   datastore_id  = "local"
   node_name     = var.node_name
-
   source_raw {
     data      = templatefile(var.userdata_template, var.userdata_vars)
     file_name = "${var.vm_name}-user.yaml"
@@ -47,7 +46,6 @@ resource "proxmox_virtual_environment_file" "vm_base_netdata" {
   content_type  = "snippets"
   datastore_id  = "local"
   node_name     = var.node_name
-
   source_raw {
     data      = templatefile(var.netdata_template, {
         "networks" = local.interfaces
@@ -64,11 +62,9 @@ resource "proxmox_vm_qemu" "vm_base" {
   name              = var.vm_name
   desc              = var.description
   vmid              = var.vm_id
-
   target_node       = var.node_name
   clone             = var.template
   agent             = 1
-
   os_type           = "cloud-init"
   cores             = var.cpu_cores
   sockets           = 1
@@ -80,7 +76,6 @@ resource "proxmox_vm_qemu" "vm_base" {
   hotplug           = "network,disk,usb,memory,cpu"
   qemu_os           = "l26"
   scsihw            = "virtio-scsi-pci"
-
   dynamic "disk" {
     for_each        = var.vm_disks[*]
     content {
@@ -89,9 +84,7 @@ resource "proxmox_vm_qemu" "vm_base" {
       storage       = disk.value.disk_datastore
     }
   }
-
   bootdisk          = "scsi0"
-
   dynamic "network" {
     for_each        = local.interfaces
     iterator        = interface
@@ -102,6 +95,5 @@ resource "proxmox_vm_qemu" "vm_base" {
       macaddr       = interface.value.mac_address
     }
   }
-
   cicustom          = "user=${proxmox_virtual_environment_file.vm_base_userdata.id},network=${proxmox_virtual_environment_file.vm_base_netdata.id}"
 }

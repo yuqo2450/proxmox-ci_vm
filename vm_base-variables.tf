@@ -48,7 +48,7 @@ variable "vm_interfaces" {
 variable "ip4_addresses" {
   type = map
   description = "Map containing ip4 addresses for all interfaces.\n Key must match interface name."
-  default = null
+  default = {}
 }
 variable "description" {
   type = string

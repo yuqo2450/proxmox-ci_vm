@@ -20,7 +20,7 @@ terraform {
 locals {
   interfaces = {for k, v in var.vm_interfaces : k => merge(v, {
         "mac_address" = macaddress.vm_base_macaddress[regex("\\d",k)].address
-        "ip4_address" = length(var.vm_interfaces) == length(var.ip4_addresses) ? var.ip4_addresses[k] : null
+        "ip4_address" = length(var.vm_interfaces) == length(var.ip4_addresses) ? var.ip4_addresses[k] : ""
       }
     )
   }

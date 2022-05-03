@@ -34,7 +34,7 @@ resource "proxmox_virtual_environment_file" "vm_base_userdata" {
   datastore_id  = "local"
   node_name     = var.node_name
   source_raw {
-    data      = templatefile(var.userdata_template, var.userdata_vars)
+    data      = templatefile(var.userdata_template, local.userdata)
     file_name = "${var.vm_name}-user.yaml"
   }
 }

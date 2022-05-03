@@ -18,14 +18,8 @@ terraform {
 
 ### Add values u want to reuse in this file. Or shorten expressions.
 locals {
-  interfaces = {for k, v in var.vm_interfaces : k => merge(v, {
-        "mac_address" = macaddress.vm_base_macaddress[regex("\\d",k)].address
-        "ip4_address" = length(var.vm_interfaces) == length(var.ip4_addresses) ? var.ip4_addresses[k] : ""
-      }
-    )
-  }
+  interfaces = length(var.vm_interfaces) == length(var.ip4_addresses) ? {for k, v in var.vm_interfaces : k => merge(v, {"mac_address" = macaddress.vm_base_macaddress[regex("\\d",k)].address, "ip4_address" = var.ip4_addresses[k]})} : {for k, v in var.vm_interfaces : k => merge(v, {"mac_address" = macaddress.vm_base_macaddress[regex("\\d",k)].address})}
 }
-
 ### Add resources in this section.
 resource "macaddress" "vm_base_macaddress" {
   count = length(var.vm_interfaces)

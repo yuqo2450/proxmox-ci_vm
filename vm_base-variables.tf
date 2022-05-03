@@ -43,7 +43,12 @@ variable "vm_disks" {
 }
 variable "vm_interfaces" {
   type = map
-  description = "Map for network interfaces. This is also used to configure cloud init."
+  description = "Map for network interfaces. This is also used to configure cloud init.\n!Must contain keys: net_bride,net_vlan!"
+}
+variable "ip4_addresses" {
+  type = map
+  description = "Map containing ip4 addresses for all interfaces.\n Key must match interface name."
+  default = null
 }
 variable "description" {
   type = string

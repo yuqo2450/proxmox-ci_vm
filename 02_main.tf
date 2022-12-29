@@ -1,21 +1,3 @@
-terraform {
-  ### Add required providers here.
-  required_providers {
-    telmate-proxmox = {
-      source  = "telmate/proxmox"
-      version = ">= 2.7.1"
-    }
-    bpg-proxmox = {
-      source  = "bpg/proxmox"
-      version = ">= 0.4.4"
-    }
-    macaddress = {
-      source = "ivoronin/macaddress"
-      version = ">= 0.3.0"
-    }
-  }
-}
-
 ### Add values u want to reuse in this file. Or shorten expressions.
 locals {
   interfaces = length(var.vm_interfaces) == length(var.ip4_addresses) ? {for k, v in var.vm_interfaces : k => merge(v, {"mac_address" = macaddress.vm_base_macaddress[regex("\\d",k)].address, "ip4_address" = var.ip4_addresses[k]})} : {for k, v in var.vm_interfaces : k => merge(v, {"mac_address" = macaddress.vm_base_macaddress[regex("\\d",k)].address})}

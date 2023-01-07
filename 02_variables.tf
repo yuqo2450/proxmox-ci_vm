@@ -67,8 +67,8 @@ variable "userdata_vars" {
   type = any
   description = "Host specific userdata data values (hostname)."
 }
-variable "nameserver_vars" {
-  type = map
+variable "netdata_vars" {
+  type = any
   default = null
   description = "Host specific userdata data values (hostname)."
 }

@@ -72,3 +72,8 @@ variable "nameserver_vars" {
   default = null
   description = "Host specific userdata data values (hostname)."
 }
+variable "mac_prefix" {
+  type = list(number)
+  default = [ 100, 179, 121 ]
+  description = "MAC address prefix for interfaces."
+}

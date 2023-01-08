@@ -2,9 +2,9 @@ resource "proxmox_vm_qemu" "vm_base" {
 
   provider = telmate-proxmox
 
-  name        = var.vm_name
+  name        = var.name
   desc        = var.description
-  vmid        = var.vm_id
+  vmid        = var.id
   target_node = var.node_name
   clone       = var.template
   agent       = 1
@@ -20,7 +20,7 @@ resource "proxmox_vm_qemu" "vm_base" {
   qemu_os     = "l26"
   scsihw      = "virtio-scsi-pci"
   dynamic "disk" {
-    for_each = var.vm_disks[*]
+    for_each = var.disks[*]
     content {
       size    = disk.value.disk_size
       type    = "scsi"

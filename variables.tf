@@ -1,8 +1,8 @@
-variable "vm_name" {
+variable "name" {
   type        = string
   description = "The name of the virtual machine."
 }
-variable "vm_id" {
+variable "id" {
   type        = number
   description = "VM ID to be used."
   default     = null
@@ -27,7 +27,7 @@ variable "mem_size" {
   type    = number
   default = 1024
 }
-variable "vm_disks" {
+variable "disks" {
   type = list(object(
     {
       disk_datastore = string
@@ -41,12 +41,17 @@ variable "vm_disks" {
     }
   ]
 }
-variable "vm_interfaces" {
-  type        = map(any)
-  description = "Map for network interfaces. This is also used to configure cloud init.\n!Must contain keys: net_bride,net_vlan!"
+variable "interfaces" {
+  type = map(object(
+    {
+      net_bridge  = string
+      net_vlan    = number
+    }
+  ))
+  description = "Map for network interfaces. This is also used to configure cloud init."
 }
 variable "ip4_addresses" {
-  type        = map(any)
+  type        = map(string)
   description = "Map containing ip4 addresses for all interfaces.\n Key must match interface name."
   default     = {}
 }

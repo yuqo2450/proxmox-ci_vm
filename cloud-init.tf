@@ -7,7 +7,7 @@ resource "proxmox_virtual_environment_file" "vm_base_userdata" {
   node_name    = var.node_name
   source_raw {
     data      = templatefile(var.userdata_template, local.userdata)
-    file_name = "${var.vm_name}-user.yaml"
+    file_name = "${var.name}-user.yaml"
   }
 }
 resource "proxmox_virtual_environment_file" "vm_base_netdata" {
@@ -19,6 +19,6 @@ resource "proxmox_virtual_environment_file" "vm_base_netdata" {
   node_name    = var.node_name
   source_raw {
     data      = templatefile(var.netdata_template, local.netdata)
-    file_name = "${var.vm_name}-net.yaml"
+    file_name = "${var.name}-net.yaml"
   }
 }

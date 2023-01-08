@@ -1,5 +1,5 @@
 resource "macaddress" "vm_base_macaddress" {
-  count = length(var.vm_interfaces)
+  count = length(var.interfaces)
 
   prefix = var.mac_prefix
 }

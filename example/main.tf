@@ -44,9 +44,8 @@ module "example" {
 
   vm_interfaces = {
     "eth0" = {
-      net_bride   = "vmbr0"
+      net_bridge  = "vmbr0"
       net_vlan    = 0
-      ip4_gateway = "192.168.1.1"
     }
   }
 

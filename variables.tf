@@ -65,6 +65,7 @@ variable "netdata_template" {
 }
 variable "userdata_vars" {
   type        = any
+  default     = null
   description = "Host specific userdata data values (hostname)."
 }
 variable "netdata_vars" {

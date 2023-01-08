@@ -32,24 +32,21 @@ provider "bpg-proxmox" {
 }
 
 module "example" {
-  source = "git@github.com:yuqo2450/tf_pmx_vm_medium.git"
+  source = "git@github.com:yuqo2450/tf_pmx_vm_base.git"
   providers = {
     telmate-proxmox = telmate-proxmox
     bpg-proxmox     = bpg-proxmox
   }
-  vm_name           = "example"
+  name              = "example"
+  node_name         = "nodename"
   template          = "example-template"
   userdata_template = "/path/to/userdata-template.yaml"
   netdata_template  = "/path/to/netdata-template.yaml"
 
-  vm_interfaces = {
+  interfaces = {
     "eth0" = {
       net_bridge  = "vmbr0"
       net_vlan    = 0
     }
-  }
-
-  ip4_addresses = {
-    "eth0" = "192.168.1.10/24"
   }
 }

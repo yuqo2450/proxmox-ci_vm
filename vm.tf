@@ -34,7 +34,7 @@ resource "proxmox_vm_qemu" "vm_base" {
     content {
       model   = "e1000"
       bridge  = interface.value.net_bridge
-      tag     = interface.value.net_vlan
+      tag     = tonumber(interface.value.net_vlan)
       macaddr = interface.value.mac_address
     }
   }

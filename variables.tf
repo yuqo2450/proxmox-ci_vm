@@ -42,18 +42,13 @@ variable "disks" {
   ]
 }
 variable "interfaces" {
-  type = map(object(
-    {
-      net_bridge  = string
-      net_vlan    = number
-    }
-  ))
-  description = "Map for network interfaces. This is also used to configure cloud init."
-}
-variable "ip4_addresses" {
-  type        = map(string)
-  description = "Map containing ip4 addresses for all interfaces.\n Key must match interface name."
-  default     = {}
+  type = map(map(string))
+  description = <<EOT
+    Map of strings for network interfaces.
+    !Required keys for each interface are net_bridge and net_vlan!
+    MAC address is automatically merged into this map with the mac_address key.
+    These values are also accessible in your netdata template using the interfaces key.
+  EOT
 }
 variable "description" {
   type        = string

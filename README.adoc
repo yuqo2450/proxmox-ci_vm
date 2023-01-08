@@ -1,0 +1,66 @@
+= Proxmox cloud-init VM
+
+:sectnums: |,all|
+:toc: auto
+:hardbreaks-option:
+
+== Description
+
+This module creates a https://www.proxmox.com/de/proxmox-ve[Proxmox VE] virtual machine, that can be configured on boot with https://cloud-init.io/[cloud-init]. To configure the VM on boot via cloud-init, you have to pass a user-data and network-data file.
+Both files can be https://developer.hashicorp.com/terraform/language/functions/templatefile[terraform template files].
+
+== Setup
+
+=== What the module affects
+
+* Creates a virtual machine in your Proxmox VE cluster
+* Creates a snippet in your Proxmox VE cluster
+* Creates a MAC address as terraform resource
+
+=== Setup Requirements
+
+* Working Proxmox VE host or cluster
+* VM Template with cloud-init installed and enabled
+* Following terraform providers:
+** https://registry.terraform.io/providers/Telmate/proxmox/latest[telmate/proxmox]
+** https://registry.terraform.io/providers/bpg/proxmox/latest[bpg/proxmox]
+** https://registry.terraform.io/providers/ivoronin/macaddress/latest[ivoronin/macaddress]
+
+Install and configured these providers as documented at their corresponding terraform registry entries.
+
+=== Beginning with this module
+
+Both proxmox providers used in this module relate to theirselfs under the name of _proxmox_. Therfore they have to be added to the _required_providers_ section as described in https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[example main]. Moreover you have to pass these provider names to each module with the _providers_ attribute.
+A basic example to use this module can be found in the https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[example main]. This example requires static userdata and netdata templates.
+
+== Usage
+
+If templates are used wich need to be rendered, the userdata_vars or netdata_vars should be used:
+[source, terraform]
+----
+userdata_vars = {
+  key = "value"
+}
+
+net_data  = {
+  key = "value"
+}
+----
+
+If the added netwokr interfaces are supposed to have static ip addresses, add the address to the interfaces map and use this key in your cloud-init template:
+[source, terraform]
+----
+interfaces = {
+  eth0 = {
+    net_bridge  = "vmbr0"
+    net_vlan    = "0"
+    ip4_address = "192.168.0.10/24"
+  }
+}
+----
+To use the key in a terraform template refer to _interfaces.eth0.ip4_address_.
+
+:sectnums!:
+== Limitations
+
+* This module is totally based around cloud-init so you have to provied user-data and net-data files

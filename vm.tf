@@ -15,7 +15,7 @@ resource "proxmox_vm_qemu" "vm_base" {
   numa        = true
   cpu         = "qemu64"
   memory      = var.mem_size
-  balloon     = 512
+  balloon     = 2048
   hotplug     = "network,disk,usb,memory,cpu"
   qemu_os     = "l26"
   scsihw      = "virtio-scsi-pci"

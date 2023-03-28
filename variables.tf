@@ -15,6 +15,22 @@ variable "template" {
   type        = string
   description = "Name of the vm or template to clone."
 }
+variable "onboot" {
+  type        = bool
+  description = "Whether or not VM should be started on host bootup."
+  default     = false
+}
+variable "startup" {
+  type = object(
+    {
+      order = optional(number)
+      up    = optional(number)
+      down  = optional(number)
+    }
+  )
+  description = "Specifiy startup and shutdown behaviour."
+  default     = null
+}
 variable "cpu_cores" {
   type    = number
   default = 4
@@ -42,7 +58,7 @@ variable "disks" {
   ]
 }
 variable "interfaces" {
-  type = map(map(string))
+  type        = map(map(string))
   description = <<EOT
     Map of strings for network interfaces.
     !Required keys for each interface are net_bridge and net_vlan!

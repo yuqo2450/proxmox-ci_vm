@@ -10,7 +10,7 @@ resource "proxmox_vm_qemu" "vm_base" {
   agent       = 1
   os_type     = "cloud-init"
   onboot      = var.onboot
-  startup     = var.startup != null ? "order=${var.startup.order},up=${var.startup.up},down=${var.startup.down}" : null
+  startup     = var.startup != null ? local.startup : null
   cores       = var.cpu_cores
   sockets     = 1
   vcpus       = var.cpu_vcpu

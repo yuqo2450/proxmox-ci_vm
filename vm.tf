@@ -9,13 +9,15 @@ resource "proxmox_vm_qemu" "vm_base" {
   clone       = var.template
   agent       = 1
   os_type     = "cloud-init"
+  onboot      = var.onboot
+  startup     = var.startup != null ? "order=${var.startup.order},up=${var.startup.up},down=${var.startup.down}" : null
   cores       = var.cpu_cores
   sockets     = 1
   vcpus       = var.cpu_vcpu
   numa        = true
   cpu         = "qemu64"
   memory      = var.mem_size
-  balloon     = 2048
+  balloon     = 1024
   hotplug     = "network,disk,usb,memory,cpu"
   qemu_os     = "l26"
   scsihw      = "virtio-scsi-pci"

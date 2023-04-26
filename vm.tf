@@ -25,8 +25,10 @@ resource "proxmox_vm_qemu" "vm_base" {
     for_each = var.disks[*]
     content {
       size    = disk.value.disk_size
+      format  = "raw"
       type    = "scsi"
       storage = disk.value.disk_datastore
+      ssd     = disk.value.ssd != null ? disk.value.ssd : 0
     }
   }
   bootdisk = "scsi0"

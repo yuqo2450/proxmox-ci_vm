@@ -48,6 +48,7 @@ variable "disks" {
     {
       disk_datastore = string
       disk_size      = string
+      ssd            = optional(number)
     }
   ))
   default = [

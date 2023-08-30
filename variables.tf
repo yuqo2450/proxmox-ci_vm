@@ -53,7 +53,7 @@ variable "disks" {
   ))
   default = [
     {
-      disk_datastore = "local-zfs"
+      disk_datastore = "local-lvm"
       disk_size      = "10G"
     }
   ]

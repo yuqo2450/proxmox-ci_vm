@@ -15,7 +15,7 @@ resource "proxmox_vm_qemu" "vm_base" {
   sockets     = 1
   vcpus       = var.cpu_vcpu
   numa        = true
-  cpu         = "qemu64"
+  cpu         = "x86-64-v2-AES"
   memory      = var.mem_size
   balloon     = 1024
   hotplug     = "network,disk,usb,memory,cpu"

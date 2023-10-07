@@ -2,6 +2,9 @@ name: Testing
 run-name: Run actions to validate and test code.
 on:
   push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   Format:

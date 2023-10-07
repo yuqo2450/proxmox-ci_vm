@@ -1,0 +1,42 @@
+name: Testing
+run-name: Run actions to validate and test code.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  Format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup terraform
+        id: setup-terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Format terraform code
+        id: format
+        run: terraform fmt
+    
+  Validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup terraform
+        id: setup-terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Init to download providers
+        id: init
+        run: terraform init
+      
+      - name: Validate terraform code
+        id: validate
+        run: terraform validate

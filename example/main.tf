@@ -23,12 +23,9 @@ provider "telmate-proxmox" {
 }
 
 provider "bpg-proxmox" {
-
-  virtual_environment {
-    endpoint = "https://example.com:8006"
-    username = "root@pam"
-    insecure = false
-  }
+  endpoint = "https://example.com:8006"
+  insecure = false
+  username = "root@pam"
 }
 
 module "example" {

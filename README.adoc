@@ -1,6 +1,5 @@
 = Proxmox cloud-init VM
 
-:sectnums: |,all|
 :toc: auto
 :hardbreaks-option:
 
@@ -30,24 +29,27 @@ Install and configured these providers as documented at their corresponding terr
 
 === Beginning with this module
 
-Both proxmox providers used in this module relate to theirselfs under the name of _proxmox_. Therfore they have to be added to the _required_providers_ section as described in https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[example main]. Moreover you have to pass these provider names to each module with the _providers_ attribute.
+This module uses to providers vor _Proxmox VE_ and both providers relate to the name _proxmox_, therefore they have to be named explicitly. https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[This example] demonstrates how to set them up. Moreover you have to pass the explicit provider name to each module with the `providers` attribute.
 A basic example to use this module can be found in the https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[example main]. This example requires static userdata and netdata templates.
 
 == Usage
 
-If templates are used wich need to be rendered, the userdata_vars or netdata_vars should be used:
+A basic example how to use this module can be found in the https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[examples].
+
+The module is designed for cloud-init support. Therefore it can *only be used* with a https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[`user_data`] and https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[`net_data`] configuration.
+It is possible to use _https://developer.hashicorp.com/terraform/language/expressions/strings#string-templates[string templates]_ as `user_data` and `net_data` to configure _cloud-init_. To pass variables to the templates use the `userdata_vars` and `netdata_vars` attributes of this module:
 [source, terraform]
 ----
 userdata_vars = {
   key = "value"
 }
 
-net_data  = {
+netdata_vars  = {
   key = "value"
 }
 ----
 
-If the added netwokr interfaces are supposed to have static ip addresses, add the address to the interfaces map and use this key in your cloud-init template:
+If the added network interfaces are supposed to have static IP addresses, add the address to the interfaces map:
 [source, terraform]
 ----
 interfaces = {
@@ -58,9 +60,9 @@ interfaces = {
   }
 }
 ----
-To use the key in a terraform template refer to _interfaces.eth0.ip4_address_.
+To use the key in a cloud-init `user_data` or `net_data` terraform template you can refer to _interfaces.eth0.ip4_address_ in the template to use the IP set for the interfaces.
 
-:sectnums!:
 == Limitations
 
-* This module is totally based around cloud-init so you have to provied user-data and net-data files
+* This module is totally based around cloud-init so you have to provide user-data and net-data files
+* Without a cloud-init image it is not possible to configure the operating system of the VMs

@@ -34,7 +34,11 @@ A basic example to use this module can be found in the https://github.com/yuqo24
 
 == Usage
 
-A basic example how to use this module can be found in the https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[examples].
+Following code is an example of how to use the module with only required variables. *!It does not work when copy pasting, cause template values must be paths to a valid file!*
+[,terraform]
+----
+include::example/main.tf[]
+----
 
 The module is designed for cloud-init support. Therefore it can *only be used* with a https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[`user_data`] and https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[`net_data`] configuration.
 It is possible to use _https://developer.hashicorp.com/terraform/language/expressions/strings#string-templates[string templates]_ as `user_data` and `net_data` to configure _cloud-init_. To pass variables to the templates use the `userdata_vars` and `netdata_vars` attributes of this module:
@@ -61,6 +65,32 @@ interfaces = {
 }
 ----
 To use the key in a cloud-init `user_data` or `net_data` terraform template you can refer to _interfaces.eth0.ip4_address_ in the template to use the IP set for the interfaces.
+
+== Variables
+
+Following table contains all variables supported by this module. Using these variables it is possible to configure and customize the vm. If the default is empty (-), then the variable is *required*.
+
+[%header,cols="^1,^1,3"]
+|===
+| Variable | Required | Description
+| name | - |  Name of the vm displayed in proxmox.
+| id | null |  VM id, if null will use next available.
+| node_name |  - | Name of the node where the vm should be deployed.
+| template | - | Name of a vm template that should be copied.
+| onboot | false | Whether or not the vm should be started on boot.
+| startup | null | Configures startup and shutdown behaviour.
+| cpu_cores | 4 | Maximum number of usable cpus for this vm.
+| cpu_vcpu | 2 | Number of vms available to the vm.
+| mem_size | 1024 | Memory size.
+.^| disk | [{disk_datastore = "local-lvm", disk_size = "10G"}] .^| Configure virtual disks for the vm.
+.^| interfaces .^| - | Configure interfaces for the vm. Typ is `map(map(string))`. Required keys are `net_bridge` and `net_vlan`.
+| description | clout-init vm | Description for the vm displayed in the description section in proxmox.
+| userdata_template | - | Path to cloud init user-data template.
+| netdata_template | - | Path to cloud init network-data template.
+| userdata_vars | null | Host specific user data values. Can be used if the template contains variables.
+| netdata_vars | null | Host specific net data values. Can be used if the template contains variables.
+| mac_prefx | [100, 179, 121] | MAC address prefix for interfaces. Can also be a full MAC address.
+|===
 
 == Limitations
 

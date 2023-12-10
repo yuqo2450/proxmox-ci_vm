@@ -83,12 +83,12 @@ variable "netdata_template" {
 variable "userdata_vars" {
   type        = any
   default     = null
-  description = "Host specific userdata data values (hostname)."
+  description = "Host specific userdata values (hostname)."
 }
 variable "netdata_vars" {
   type        = any
   default     = null
-  description = "Host specific userdata data values (hostname)."
+  description = "Host specific netdata values (ip)."
 }
 variable "mac_prefix" {
   type        = list(number)

@@ -29,8 +29,8 @@ Install and configured these providers as documented at their corresponding terr
 
 === Beginning with this module
 
-This module uses to providers vor _Proxmox VE_ and both providers relate to the name _proxmox_, therefore they have to be named explicitly. https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[This example] demonstrates how to set them up. Moreover you have to pass the explicit provider name to each module with the `providers` attribute.
-A basic example to use this module can be found in the https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[example main]. This example requires static userdata and netdata templates.
+This module uses two providers for _Proxmox VE_ and both providers relate to the name _proxmox_, therefore they have to be named explicitly. https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[This example] demonstrates how to set this up. Moreover you have to pass the explicit provider name to each module with the `providers` attribute.
+A basic example to use this module can be found in the https://github.com/yuqo2450/tf_pmx_vm_base/blob/main/example/main.tf[example/main]. This example requires static userdata and netdata templates.
 
 == Usage
 
@@ -72,7 +72,7 @@ Following table contains all variables supported by this module. Using these var
 
 [%header,cols="^1,^1,3"]
 |===
-| Variable | Required | Description
+| Variable | Defaults | Description
 | name | - |  Name of the vm displayed in proxmox.
 | id | null |  VM id, if null will use next available.
 | node_name |  - | Name of the node where the vm should be deployed.
